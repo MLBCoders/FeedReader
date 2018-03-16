@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Feed Reader</string>
+    <string name="fetch_feed_btn_text">Fetch</string>
+    <string name="feed_title">Feed Title :</string>
+    <string name="feed_description">Feed Description :</string>
+    <string name="feed_link">Feed Link :</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_button_text">Login</string>
+    <string name="twitter">Twitter</string>
+    <string name="reddit">Reddit</string>
+</resources>
