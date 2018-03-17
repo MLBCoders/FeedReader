@@ -2,13 +2,17 @@ package lk.nirmalsakila.feedreader;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,28 +29,25 @@ import java.util.List;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
-    private static final String ENDPOINT = "https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+    private final String TAG = "PostActivity";
+//    private static final String ENDPOINT = "https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+//    private static final String ENDPOINT = "https://newsapi.org/v2/everything?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+    private static final String ENDPOINT = "https://newsapi.org/v2/top-headlines?sources=espn-cric-info&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
 
     private RequestQueue requestQueue;
     private Gson gson;
 
-    private ListView mRecyclerView;
+    private SwipeRefreshLayout mSwipeLayout;
+    private RecyclerView mRecyclerView;
     List<Post> posts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed);
         mRecyclerView = findViewById(R.id.newsFeedRecyclerView);
+        mSwipeLayout = findViewById(R.id.newsFeedswipeRefreshLayout);
 
-        NewsFeedAdapter newsFeedAdapter = new NewsFeedAdapter(getApplicationContext(),posts);
-        mRecyclerView.setAdapter(newsFeedAdapter);
-
-        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goToUrl(posts.get(position).url);
-            }
-        });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -55,9 +56,18 @@ public class NewsFeedActivity extends AppCompatActivity {
         gson = gsonBuilder.create();
 
         fetchPosts();
+
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchPosts();
+            }
+        });
     }
 
     private void fetchPosts() {
+        Log.d(TAG,"Fetching Started");
+        mSwipeLayout.setRefreshing(true);
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT, onPostsLoaded, onPostsError);
 
         requestQueue.add(request);
@@ -71,7 +81,9 @@ public class NewsFeedActivity extends AppCompatActivity {
             PostSet postSet = gson.fromJson(response, PostSet.class);
             Log.i("PostActivity","PostSet ==> Status : " + postSet.status);
             posts = postSet.articles;
-            mRecyclerView.setAdapter(new NewsFeedAdapter(getApplicationContext(),posts));
+//            mRecyclerView.setAdapter(new NewsFeedAdapter(getApplicationContext(),posts));
+            mRecyclerView.setAdapter(new PostFeedAdapter(posts));
+            mSwipeLayout.setRefreshing(false);
 
             Log.i("PostActivity", posts.size() + " posts loaded.");
             for (Post post : posts) {
@@ -89,6 +101,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         @Override
         public void onErrorResponse(VolleyError error) {
             Log.e("PostActivity", error.toString());
+            mSwipeLayout.setRefreshing(false);
         }
     };
 
@@ -99,5 +112,4 @@ public class NewsFeedActivity extends AppCompatActivity {
         launchBrowser.putExtra("URL",url);
         startActivity(launchBrowser);
     }
-
 }

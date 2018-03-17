@@ -7,6 +7,7 @@ import android.app.Application;
  */
 
 public class GlobalClass extends Application {
+    final String TAG = "FEEDREADER";
     final String KEY_SERVICE_NAME = "ServiceName";
 
     String selectedFeedService;
