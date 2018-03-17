@@ -49,7 +49,7 @@ class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedMod
         ((TextView)holder.rssFeedView.findViewById(R.id.linkText)).setText(rssFeedModel.link);
         if(rssFeedModel.imageURI!=null){
             Uri imageUri = Uri.parse(rssFeedModel.imageURI);
-            ((ImageView)holder.rssFeedView.findViewById(R.id.postImage)).setImageURI(imageUri);
+            ((ImageView)holder.rssFeedView.findViewById(R.id.rssImage)).setImageURI(imageUri);
         }
     }
 

@@ -1,9 +1,14 @@
 package lk.nirmalsakila.feedreader;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,13 +30,23 @@ public class NewsFeedActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private Gson gson;
 
-    private RecyclerView mRecyclerView;
-
+    private ListView mRecyclerView;
+    List<Post> posts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed);
         mRecyclerView = findViewById(R.id.newsFeedRecyclerView);
+
+        NewsFeedAdapter newsFeedAdapter = new NewsFeedAdapter(getApplicationContext(),posts);
+        mRecyclerView.setAdapter(newsFeedAdapter);
+
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goToUrl(posts.get(position).url);
+            }
+        });
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -55,18 +70,17 @@ public class NewsFeedActivity extends AppCompatActivity {
 
             PostSet postSet = gson.fromJson(response, PostSet.class);
             Log.i("PostActivity","PostSet ==> Status : " + postSet.status);
-            List<Post> posts = postSet.articles;
-            List<RssFeedModel> rssPosts = new ArrayList<>();
+            posts = postSet.articles;
+            mRecyclerView.setAdapter(new NewsFeedAdapter(getApplicationContext(),posts));
 
             Log.i("PostActivity", posts.size() + " posts loaded.");
             for (Post post : posts) {
                 Log.i("PostActivity", post.ID + ": " + post.title);
-                RssFeedModel rssPost = new RssFeedModel(post.title,post.url,post.description,post.urlToImage);
-                rssPosts.add(rssPost);
-                Log.i("PostActivity", "FROM RSS ==> " + rssPost.title + ": " + rssPost.description);
+//                RssFeedModel rssPost = new RssFeedModel(post.title,post.url,post.description,post.urlToImage);
+//                rssPosts.add(rssPost);
+//                Log.i("PostActivity", "FROM RSS ==> " + rssPost.title + ": " + rssPost.description);
             }
 
-            mRecyclerView.setAdapter(new RssFeedListAdapter(rssPosts));
             Log.i("PostActivity", "Recycler View ==> " + mRecyclerView);
         }
     };
@@ -78,5 +92,12 @@ public class NewsFeedActivity extends AppCompatActivity {
         }
     };
 
+    private void goToUrl (String url) {
+//        Uri uriUrl = Uri.parse(url);
+//        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        Intent launchBrowser = new Intent(getApplicationContext(),WebActivity.class);
+        launchBrowser.putExtra("URL",url);
+        startActivity(launchBrowser);
+    }
 
 }

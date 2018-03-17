@@ -22,7 +22,7 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/postImage"
+        android:id="@+id/rssImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
