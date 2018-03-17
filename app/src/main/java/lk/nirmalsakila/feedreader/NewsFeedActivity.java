@@ -1,8 +1,6 @@
 package lk.nirmalsakila.feedreader;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,15 +20,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
     private final String TAG = "PostActivity";
-//    private static final String ENDPOINT = "https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
-//    private static final String ENDPOINT = "https://newsapi.org/v2/everything?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
-    private static final String ENDPOINT = "https://newsapi.org/v2/top-headlines?sources=espn-cric-info&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+//    private static final String ENDPOINT_HEADLINES = "https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+//    private static final String ENDPOINT_EVERYTHING = "https://newsapi.org/v2/everything?sources=cnn&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+//    private static final String ENDPOINT = "https://newsapi.org/v2/top-headlines?sources=espn-cric-info&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
 
     private RequestQueue requestQueue;
     private Gson gson;
@@ -40,6 +35,9 @@ public class NewsFeedActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRecyclerView;
     List<Post> posts = new ArrayList<>();
+    String feedEndpoint;
+    String ENDPOINT_HEADLINES;
+    String ENDPOINT_EVERYTHING;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +53,40 @@ public class NewsFeedActivity extends AppCompatActivity {
         gsonBuilder.setDateFormat("M/d/yy hh:mm a");
         gson = gsonBuilder.create();
 
-        fetchPosts();
+        String service = getIntent().getStringExtra("SERVICE");
+        Log.d(TAG,"Service : " + service);
+        ENDPOINT_HEADLINES = getServiceEndpoint(service,"top-headlines");
+        ENDPOINT_EVERYTHING = getServiceEndpoint(service,"everything");
+        feedEndpoint = ENDPOINT_HEADLINES;
+        fetchPosts(feedEndpoint);
 
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchPosts();
+                fetchPosts(feedEndpoint);
+            }
+        });
+
+        Button feedHeadlineButton  = findViewById(R.id.feedHeadlineButton);
+        feedHeadlineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                feedEndpoint = ENDPOINT_HEADLINES;
+                fetchPosts(feedEndpoint);
+            }
+        });
+
+        Button feedEverythingButton  = findViewById(R.id.feedEverythingButton);
+        feedEverythingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                feedEndpoint = ENDPOINT_EVERYTHING;
+                fetchPosts(feedEndpoint);
             }
         });
     }
 
-    private void fetchPosts() {
+    private void fetchPosts(String ENDPOINT) {
         Log.d(TAG,"Fetching Started");
         mSwipeLayout.setRefreshing(true);
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT, onPostsLoaded, onPostsError);
@@ -111,5 +132,9 @@ public class NewsFeedActivity extends AppCompatActivity {
         Intent launchBrowser = new Intent(getApplicationContext(),WebActivity.class);
         launchBrowser.putExtra("URL",url);
         startActivity(launchBrowser);
+    }
+
+    private String getServiceEndpoint(String serviceType,String feedType){
+        return "https://newsapi.org/v2/" + feedType + "?sources="+ serviceType + "&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
     }
 }

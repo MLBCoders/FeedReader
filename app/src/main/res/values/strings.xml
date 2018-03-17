@@ -10,4 +10,10 @@
     <string name="login_button_text">Login</string>
     <string name="twitter">Twitter</string>
     <string name="reddit">Reddit</string>
+    <string name="headlines">Headlines</string>
+    <string name="everything">Everything</string>
+    <string name="title_activity_feed_list_selector">FeedListSelectorActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

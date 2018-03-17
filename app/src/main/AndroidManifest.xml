@@ -40,7 +40,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewsFeedActivity" />
-        <activity android:name=".WebActivity"></activity>
+        <activity android:name=".WebActivity" />
+        <activity
+            android:name=".FeedListSelectorActivity"
+            android:label="@string/title_activity_feed_list_selector"></activity>
     </application>
 
 </manifest>

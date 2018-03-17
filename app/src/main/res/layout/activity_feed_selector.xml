@@ -7,10 +7,10 @@
     android:orientation="vertical"
     tools:context="lk.nirmalsakila.feedreader.FeedSelectorActivity">
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <android.support.v7.widget.CardView
             android:id="@+id/selectorTwitterButton"
@@ -28,52 +28,104 @@
                 android:padding="40dp"
                 android:src="@drawable/twitter_logo" />
         </android.support.v7.widget.CardView>
-    <!--</LinearLayout>-->
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
-    <android.support.v7.widget.CardView
-        android:id="@+id/selectorTwitterButton1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:elevation="10dp"
-        app:cardCornerRadius="20dp">
-
-        <ImageView
+        <android.support.v7.widget.CardView
+            android:id="@+id/selectorTwitterButton2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorTwitter"
-            android:padding="40dp"
-            android:src="@drawable/twitter_logo" />
-    </android.support.v7.widget.CardView>
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp">
 
-    <!--</LinearLayout>-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorTwitter"
+                android:padding="40dp"
+                android:src="@drawable/twitter_logo" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
-    <android.support.v7.widget.CardView
-        android:id="@+id/selectorTwitterButton2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:elevation="10dp"
-        app:cardCornerRadius="20dp">
+        android:layout_weight="1">
 
-        <ImageView
+        <android.support.v7.widget.CardView
+            android:id="@+id/selectorCNNButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorTwitter"
-            android:padding="40dp"
-            android:src="@drawable/twitter_logo" />
-    </android.support.v7.widget.CardView>
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp">
 
-    <!--</LinearLayout>-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorCNN"
+                android:padding="40dp"
+                android:src="@drawable/cnn_logo_white" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/selectorCNNSportsButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorCNN"
+                android:padding="40dp"
+                android:src="@drawable/cnn_logo_grey" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/selectorBBCNewsButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBBC"
+                android:padding="40dp"
+                android:src="@drawable/bbc_logo_white" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/selectorBBCSportsButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBBCSport"
+                android:padding="40dp"
+                android:src="@drawable/bbcsport" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

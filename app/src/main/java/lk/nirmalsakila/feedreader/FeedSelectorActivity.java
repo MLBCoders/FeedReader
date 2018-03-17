@@ -53,15 +53,26 @@ public class FeedSelectorActivity extends AppCompatActivity {
             }
         });
 
-        CardView jsonNews = findViewById(R.id.selectorTwitterButton1);
-        jsonNews.setOnClickListener(new View.OnClickListener() {
+        CardView CNNNews = findViewById(R.id.selectorCNNButton);
+        CNNNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(FeedSelectorActivity.this,NewsFeedActivity.class);
+                intent.putExtra("SERVICE","cnn");
                 FeedSelectorActivity.this.startActivity(intent);
             }
         });
 
+        CardView BBCNews = findViewById(R.id.selectorBBCNewsButton);
+        BBCNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(FeedSelectorActivity.this,NewsFeedActivity.class);
+                intent.putExtra("SERVICE","bbc-news");
+                FeedSelectorActivity.this.startActivity(intent);
+            }
+        });
     }
 }
