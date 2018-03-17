@@ -24,7 +24,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
 
         HashMap<Integer,Integer> feedSelectors = new HashMap<>();
         feedSelectors.put(R.string.twitter,R.id.selectorTwitterButton);
-        feedSelectors.put(R.string.reddit,R.id.selectorTwitterButton1);
+//        feedSelectors.put(R.string.reddit,R.id.selectorTwitterButton1);
 //        feedSelectors.put(R.string.rss,R.id.selectorTwitterButton2);
 
         for(Map.Entry<Integer,Integer> entry : feedSelectors.entrySet()){
@@ -49,6 +49,16 @@ public class FeedSelectorActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(FeedSelectorActivity.this,MainActivity.class);
+                FeedSelectorActivity.this.startActivity(intent);
+            }
+        });
+
+        CardView jsonNews = findViewById(R.id.selectorTwitterButton1);
+        jsonNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(FeedSelectorActivity.this,NewsFeedActivity.class);
                 FeedSelectorActivity.this.startActivity(intent);
             }
         });

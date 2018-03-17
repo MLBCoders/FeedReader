@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     result = xmlPullParser.getText();
                     xmlPullParser.nextTag();
                 }
-                Log.d("MyXmlParser", "Parsing name ==> " + name + " Result ==> " + result);
+                Log.d("MyXmlParser", "Parsing name ==> " + name + " ==> " + result);
                 if (name.equalsIgnoreCase("title")) {
                     title = result;
                 } else if (name.equalsIgnoreCase("link")) {
