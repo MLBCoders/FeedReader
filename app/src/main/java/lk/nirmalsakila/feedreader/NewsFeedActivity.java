@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -57,8 +59,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         Log.d(TAG,"Service : " + service);
         ENDPOINT_HEADLINES = getServiceEndpoint(service,"top-headlines");
         ENDPOINT_EVERYTHING = getServiceEndpoint(service,"everything");
-        feedEndpoint = ENDPOINT_HEADLINES;
-        fetchPosts(feedEndpoint);
+        feedEndpoint = ENDPOINT_EVERYTHING;
+//        fetchPosts(feedEndpoint);
 
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,23 +69,44 @@ public class NewsFeedActivity extends AppCompatActivity {
             }
         });
 
-        Button feedHeadlineButton  = findViewById(R.id.feedHeadlineButton);
-        feedHeadlineButton.setOnClickListener(new View.OnClickListener() {
+//        Button feedHeadlineButton  = findViewById(R.id.feedHeadlineButton);
+//        feedHeadlineButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                feedEndpoint = ENDPOINT_HEADLINES;
+//                fetchPosts(feedEndpoint);
+//            }
+//        });
+//
+//        Button feedEverythingButton  = findViewById(R.id.feedEverythingButton);
+//        feedEverythingButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                feedEndpoint = ENDPOINT_EVERYTHING;
+//                fetchPosts(feedEndpoint);
+//            }
+//        });
+        ToggleButton feedTypeSelectButton = findViewById(R.id.feedTypeSelectButton);
+        feedTypeSelectButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                feedEndpoint = ENDPOINT_HEADLINES;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Log.d(TAG,"Endpoint : headlines ");
+                    feedEndpoint = ENDPOINT_HEADLINES;
+                }else{
+                    Log.d(TAG,"Endpoint : Everything ");
+                    feedEndpoint = ENDPOINT_EVERYTHING;
+                }
                 fetchPosts(feedEndpoint);
             }
         });
+        feedTypeSelectButton.setChecked(false);
+    }
 
-        Button feedEverythingButton  = findViewById(R.id.feedEverythingButton);
-        feedEverythingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                feedEndpoint = ENDPOINT_EVERYTHING;
-                fetchPosts(feedEndpoint);
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchPosts(feedEndpoint);
     }
 
     private void fetchPosts(String ENDPOINT) {

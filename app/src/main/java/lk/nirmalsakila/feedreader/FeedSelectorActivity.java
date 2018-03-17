@@ -74,5 +74,16 @@ public class FeedSelectorActivity extends AppCompatActivity {
                 FeedSelectorActivity.this.startActivity(intent);
             }
         });
+
+        CardView CNNSports = findViewById(R.id.selectorCNNSportsButton);
+        CNNSports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(FeedSelectorActivity.this,FeedListSelectorActivity.class);
+//                intent.putExtra("SERVICE","cnn");
+                FeedSelectorActivity.this.startActivity(intent);
+            }
+        });
     }
 }

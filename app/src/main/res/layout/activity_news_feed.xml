@@ -6,29 +6,36 @@
     android:layout_height="match_parent"
     tools:context="lk.nirmalsakila.feedreader.NewsFeedActivity">
 
-    <LinearLayout
-        android:id="@+id/feedTypeButtonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/feedHeadlineButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/headlines"/>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/feedTypeButtonLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<Button-->
+            <!--android:id="@+id/feedHeadlineButton"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/headlines"/>-->
 
-        <Button
-            android:id="@+id/feedEverythingButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/everything"/>
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/feedEverythingButton"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/everything"/>-->
+    <!--</LinearLayout>-->
+    <ToggleButton
+        android:id="@+id/feedTypeSelectButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOn="@string/top_headlines"
+        android:textOff="@string/all_headlines"
+        />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/newsFeedswipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/feedTypeButtonLayout">
+        android:layout_below="@id/feedTypeSelectButton">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newsFeedRecyclerView"

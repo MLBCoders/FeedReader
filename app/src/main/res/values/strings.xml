@@ -12,8 +12,10 @@
     <string name="reddit">Reddit</string>
     <string name="headlines">Headlines</string>
     <string name="everything">Everything</string>
-    <string name="title_activity_feed_list_selector">FeedListSelectorActivity</string>
+    <string name="title_activity_feed_list_selector">Feed Selector</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="top_headlines">Top Headlines</string>
+    <string name="all_headlines">All Headlines</string>
 </resources>

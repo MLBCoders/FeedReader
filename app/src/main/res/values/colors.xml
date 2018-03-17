@@ -10,4 +10,7 @@
     <color name="colorBBC">#9D0A0E</color>
     <color name="colorBBCSport">#FFD230</color>
     <color name="colorTextBlack">#181818</color>
+
+    <color name="colorNavIcon">#dae9f6</color>
+    <color name="colorNavText">#01294b</color>
 </resources>
