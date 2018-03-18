@@ -21,6 +21,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed_selector);
 
         final GlobalClass globalClass = (GlobalClass) this.getApplication();
+        globalClass.setAPPLICaTION_CONTEXT(getApplicationContext());
 
         HashMap<Integer,Integer> feedSelectors = new HashMap<>();
         feedSelectors.put(R.string.twitter,R.id.selectorTwitterButton);

@@ -7,7 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
         private final TextView postTitleText;
         private final TextView postDescriptionText;
         private final TextView postUrlText;
+        private final ImageView postImage;
 
         private View postFeedView;
         public PostFeedViewHolder(final View itemView) {
@@ -41,6 +46,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
             postTitleText = itemView.findViewById(R.id.postTitleText);
             postDescriptionText = itemView.findViewById(R.id.postDescriptionText);
             postUrlText = itemView.findViewById(R.id.postUrlText);
+            postImage = itemView.findViewById(R.id.postImage);
         }
 
         public TextView getPostTitleText() {
@@ -53,6 +59,14 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
 
         public TextView getPostUrlText() {
             return postUrlText;
+        }
+
+        public ImageView getPostImage() {
+            return postImage;
+        }
+
+        public View getPostFeedView() {
+            return postFeedView;
         }
     }
 
@@ -71,6 +85,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
 
     @Override
     public void onBindViewHolder(PostFeedViewHolder holder, int position) {
+        Context context = holder.postImage.getContext();
 
         final Post post = mDataSet.get(position);
         Log.d("PostActivity","SET " + position + " TO : " + post.title);
@@ -78,6 +93,8 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
         ((TextView)holder.postFeedView.findViewById(R.id.postTitleText)).setText(post.title);
         holder.getPostDescriptionText().setText(post.description);
         holder.getPostUrlText().setText(post.url);
+
+        Glide.with(context).load(post.urlToImage).into(holder.postImage);
     }
 
     @Override
