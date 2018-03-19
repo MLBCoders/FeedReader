@@ -76,6 +76,17 @@ public class FeedSelectorActivity extends AppCompatActivity {
             }
         });
 
+        CardView BBCSports = findViewById(R.id.selectorBBCSportsButton);
+        BBCSports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(FeedSelectorActivity.this,NewsFeedActivity.class);
+                intent.putExtra("SERVICE","espn-cric-info");
+                FeedSelectorActivity.this.startActivity(intent);
+            }
+        });
+
         CardView CNNSports = findViewById(R.id.selectorCNNSportsButton);
         CNNSports.setOnClickListener(new View.OnClickListener() {
             @Override
