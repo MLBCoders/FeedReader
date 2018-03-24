@@ -84,7 +84,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
         mDataSet = dataSet;
 
         globalClass = (GlobalClass) context;
-        Log.d("FEED_ADAPTER","Global Class : " + globalClass);
+//        Log.d("FEED_ADAPTER","Global Class : " + globalClass);
     }
 
     @Override
