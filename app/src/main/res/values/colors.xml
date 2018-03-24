@@ -13,4 +13,12 @@
 
     <color name="colorNavIcon">#dae9f6</color>
     <color name="colorNavText">#01294b</color>
+
+    <!--dark theme-->
+    <color name="colorLightGrey">#464646</color>
+    <color name="colorBlack">#111111</color>
+
+    <color name="colorWhite">#d7d5d5</color>
+    <color name="text_color_primary">#ffffff</color>
+
 </resources>

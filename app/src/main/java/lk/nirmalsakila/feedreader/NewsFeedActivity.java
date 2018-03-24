@@ -40,10 +40,16 @@ public class NewsFeedActivity extends AppCompatActivity {
     String feedEndpoint;
     String ENDPOINT_HEADLINES;
     String ENDPOINT_EVERYTHING;
+
+    GlobalClass globalClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        globalClass = (GlobalClass) this.getApplication();
+        setTheme(globalClass.isDarkThemeEnabled()? R.style.AppThemeDark : R.style.AppThemeLight);
         setContentView(R.layout.activity_news_feed);
+
         mRecyclerView = findViewById(R.id.newsFeedRecyclerView);
         mSwipeLayout = findViewById(R.id.newsFeedswipeRefreshLayout);
 

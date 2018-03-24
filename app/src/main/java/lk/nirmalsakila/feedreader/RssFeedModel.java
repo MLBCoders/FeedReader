@@ -4,7 +4,7 @@ package lk.nirmalsakila.feedreader;
  * Created by user on 3/12/2018.
  */
 
-class RssFeedModel {
+public class RssFeedModel {
 
     public String title;
     public String link;

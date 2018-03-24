@@ -20,31 +20,18 @@
                 android:id="@+id/postTitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/colorTextBlack"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/postDescriptionText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorTextBlack" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/postUrlText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorTextBlack" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-
-    <!--<ImageView-->
-        <!--android:id="@+id/postImage"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="300dp" />-->
-
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/colorAccent" />-->
 
 </LinearLayout>

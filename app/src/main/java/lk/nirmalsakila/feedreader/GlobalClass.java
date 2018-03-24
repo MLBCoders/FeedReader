@@ -13,6 +13,7 @@ public class GlobalClass extends Application {
     Context APPLICaTION_CONTEXT = null;
 
     String selectedFeedService;
+    boolean darkThemeEnabled;
 
     public String getSelectedFeedService() {
         return selectedFeedService;
@@ -28,5 +29,13 @@ public class GlobalClass extends Application {
 
     public void setAPPLICaTION_CONTEXT(Context APPLICaTION_CONTEXT) {
         this.APPLICaTION_CONTEXT = APPLICaTION_CONTEXT;
+    }
+
+    public boolean isDarkThemeEnabled() {
+        return darkThemeEnabled;
+    }
+
+    public void setDarkThemeEnabled(boolean darkThemeEnabled) {
+        this.darkThemeEnabled = darkThemeEnabled;
     }
 }

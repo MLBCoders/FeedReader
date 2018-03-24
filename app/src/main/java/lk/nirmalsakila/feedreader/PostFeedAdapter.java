@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -94,7 +95,10 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
         holder.getPostDescriptionText().setText(post.description);
         holder.getPostUrlText().setText(post.url);
 
-        Glide.with(context).load(post.urlToImage).into(holder.postImage);
+        Glide.with(context)
+                .load(post.urlToImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.postImage);
     }
 
     @Override

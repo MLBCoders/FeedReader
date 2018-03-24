@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 
-class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedModelViewHolder> {
+public class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedModelViewHolder> {
 
     private List<RssFeedModel> mRssFeedModels;
 
