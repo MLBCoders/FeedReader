@@ -93,4 +93,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="action_about">About</string>
     <string name="dark_theme">Dark Theme</string>
+    <string name="download">Download</string>
 </resources>

@@ -82,10 +82,10 @@ public class FeedSelectorActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-//                intent.putExtra("SERVICE","cnn");
-//                FeedSelectorActivity.this.startActivity(intent);
-                globalClass.setDarkThemeEnabled(true);
-                FeedSelectorActivity.this.recreate();
+                intent.putExtra("SERVICE","cnn");
+                FeedSelectorActivity.this.startActivity(intent);
+//                globalClass.setDarkThemeEnabled(true);
+//                FeedSelectorActivity.this.recreate();
             }
         });
 
@@ -95,10 +95,10 @@ public class FeedSelectorActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-//                intent.putExtra("SERVICE", "bbc-news");
-//                FeedSelectorActivity.this.startActivity(intent);.
-                globalClass.setDarkThemeEnabled(false);
-                FeedSelectorActivity.this.recreate();
+                intent.putExtra("SERVICE", "bbc-news");
+                FeedSelectorActivity.this.startActivity(intent);
+//                globalClass.setDarkThemeEnabled(false);
+//                FeedSelectorActivity.this.recreate();
             }
         });
 

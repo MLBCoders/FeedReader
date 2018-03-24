@@ -9,15 +9,18 @@ import android.webkit.WebViewClient;
 
 public class WebActivity extends AppCompatActivity {
 
+    GlobalClass globalClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        globalClass = (GlobalClass) this.getApplication();
+        setTheme(globalClass.isDarkThemeEnabled()? R.style.AppThemeDark : R.style.AppThemeLight);
         setContentView(R.layout.activity_web);
 
         String url = getIntent().getStringExtra("URL");
         Log.d("PostActivity","Lanuching webview URL : " + url);
         WebView webview = findViewById(R.id.webView);
-        webview.getSettings().setJavaScriptEnabled(true);
+//        webview.getSettings().setJavaScriptEnabled(true);
 //        webview.setWebViewClient(new WebViewClient(){
 //            ProgressDialog progressDialog;
 //

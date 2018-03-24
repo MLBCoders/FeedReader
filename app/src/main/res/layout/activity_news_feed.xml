@@ -41,7 +41,7 @@
             android:id="@+id/newsFeedRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorTextBlack"/>
+            android:background="@color/colorBlack"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

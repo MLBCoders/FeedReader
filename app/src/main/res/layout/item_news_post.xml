@@ -19,7 +19,7 @@
                 android:id="@+id/postImageDownloadBtn"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:text="Download"/>
+                android:text="@string/download"/>
             <ImageView
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
