@@ -52,13 +52,13 @@ public class NewsFeedAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.item_news_post,null);
         TextView postTitleText = vi.findViewById(R.id.postTitleText);
         TextView postDescriptionText = vi.findViewById(R.id.postDescriptionText);
-        TextView postUrlText = vi.findViewById(R.id.postUrlText);
+//        TextView postUrlText = vi.findViewById(R.id.postUrlText);
 
 
 
         postTitleText.setText(data.get(position).title);
         postDescriptionText.setText(data.get(position).description);
-        postUrlText.setText(data.get(position).url);
+//        postUrlText.setText(data.get(position).url);
 
         return vi;
     }

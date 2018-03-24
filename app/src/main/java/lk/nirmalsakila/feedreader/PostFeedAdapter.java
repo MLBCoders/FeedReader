@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,13 +24,15 @@ import java.util.List;
 public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFeedViewHolder> {
 
     private static List<Post> mDataSet;
+    GlobalClass globalClass;
 
     public static class PostFeedViewHolder extends RecyclerView.ViewHolder{
 
         private final TextView postTitleText;
         private final TextView postDescriptionText;
-        private final TextView postUrlText;
+//        private final TextView postUrlText;
         private final ImageView postImage;
+        private final Button postImageDownloadBtn;
 
         private View postFeedView;
         public PostFeedViewHolder(final View itemView) {
@@ -46,8 +49,9 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
 
             postTitleText = itemView.findViewById(R.id.postTitleText);
             postDescriptionText = itemView.findViewById(R.id.postDescriptionText);
-            postUrlText = itemView.findViewById(R.id.postUrlText);
+//            postUrlText = itemView.findViewById(R.id.postUrlText);
             postImage = itemView.findViewById(R.id.postImage);
+            postImageDownloadBtn = itemView.findViewById(R.id.postImageDownloadBtn);
         }
 
         public TextView getPostTitleText() {
@@ -58,9 +62,9 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
             return postDescriptionText;
         }
 
-        public TextView getPostUrlText() {
-            return postUrlText;
-        }
+//        public TextView getPostUrlText() {
+//            return postUrlText;
+//        }
 
         public ImageView getPostImage() {
             return postImage;
@@ -69,23 +73,33 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
         public View getPostFeedView() {
             return postFeedView;
         }
+
+        public Button getPostImageDownloadBtn() {
+            return postImageDownloadBtn;
+        }
     }
 
-    public PostFeedAdapter(List<Post> dataSet){
+    public PostFeedAdapter(List<Post> dataSet,Context context){
         Log.d("PostActivity","Post Feed Adapter Created . DATA : " + dataSet.size() );
         mDataSet = dataSet;
+
+        globalClass = (GlobalClass) context;
+        Log.d("FEED_ADAPTER","Global Class : " + globalClass);
     }
 
     @Override
     public PostFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_news_post,parent,false);
+//
+//        globalClass = (GlobalClass) v.getContext().getApplicationContext();
+//        Log.d("FEED_ADAPTER","Global Class : " + globalClass);
 
         return new PostFeedViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(PostFeedViewHolder holder, int position) {
+    public void onBindViewHolder(final PostFeedViewHolder holder, final int position) {
         Context context = holder.postImage.getContext();
 
         final Post post = mDataSet.get(position);
@@ -93,10 +107,31 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
 
         ((TextView)holder.postFeedView.findViewById(R.id.postTitleText)).setText(post.title);
         holder.getPostDescriptionText().setText(post.description);
-        holder.getPostUrlText().setText(post.url);
+//        holder.getPostUrlText().setText(post.url);
+        if (globalClass.isDataSaverOn()){
+            holder.getPostImageDownloadBtn().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    downloadAndLoadImageToImageView(holder,post.urlToImage);
+                    holder.getPostImageDownloadBtn().setVisibility(View.GONE);
+                }
+            });
+        }else{
+            downloadAndLoadImageToImageView(holder,post.urlToImage);
+            holder.getPostImageDownloadBtn().setVisibility(View.GONE);
+        }
 
+//        Glide.with(context)
+//                .load(post.urlToImage)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(holder.postImage);
+    }
+
+    public void downloadAndLoadImageToImageView(PostFeedViewHolder holder,String url){
+        Context context = holder.postImage.getContext();
+        holder.getPostImage().setVisibility(View.VISIBLE);
         Glide.with(context)
-                .load(post.urlToImage)
+                .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.postImage);
     }

@@ -14,6 +14,7 @@ public class GlobalClass extends Application {
 
     String selectedFeedService;
     boolean darkThemeEnabled;
+    boolean dataSaverOn;
 
     public String getSelectedFeedService() {
         return selectedFeedService;
@@ -37,5 +38,13 @@ public class GlobalClass extends Application {
 
     public void setDarkThemeEnabled(boolean darkThemeEnabled) {
         this.darkThemeEnabled = darkThemeEnabled;
+    }
+
+    public boolean isDataSaverOn() {
+        return dataSaverOn;
+    }
+
+    public void setDataSaverOn(boolean dataSaverOn) {
+        this.dataSaverOn = dataSaverOn;
     }
 }
