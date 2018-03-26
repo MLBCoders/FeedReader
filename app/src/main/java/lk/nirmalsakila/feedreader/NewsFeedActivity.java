@@ -1,6 +1,9 @@
 package lk.nirmalsakila.feedreader;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -156,7 +160,23 @@ public class NewsFeedActivity extends AppCompatActivity {
     private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.e("PostActivity", error.toString());
+            Log.e("PostActivity", "ERROR : " + error.toString());
+//            Toast.makeText(getApplication(), getString(R.string.error_network_connection), Toast.LENGTH_SHORT)
+//                    .show();
+            final Snackbar snackBar = Snackbar.make(findViewById(R.id.activity_news_feed), getString(R.string.error_network_connection), Snackbar.LENGTH_INDEFINITE);
+
+            snackBar.setAction("Connect", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivityForResult(new Intent(Settings.ACTION_SETTINGS), 0);
+                    snackBar.dismiss();
+                }
+            });
+            snackBar.setActionTextColor(Color.RED);
+            View sbView = snackBar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.WHITE);
+            snackBar.show();
             mSwipeLayout.setRefreshing(false);
         }
     };

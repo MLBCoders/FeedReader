@@ -39,7 +39,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(globalClass.KEY_PREFERENCE_FILE, Context.MODE_PRIVATE);
         globalClass.setSharedPreferences(sharedPreferences);
 
-        setTheme(globalClass.isDarkThemeEnabled()? R.style.AppThemeDark : R.style.AppThemeLight);
+        setTheme(globalClass.isDarkThemeEnabled() ? R.style.AppThemeDark : R.style.AppThemeLight);
         setContentView(R.layout.activity_feed_selector);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -83,9 +83,9 @@ public class FeedSelectorActivity extends AppCompatActivity {
         });
 
         HashMap<Integer, String> feedServices = new HashMap<>();
-        feedServices.put(R.id.selectorBBCNewsButton,"bbc-news");
-        feedServices.put(R.id.selectorBBCSportsButton,"espn-cric-info");
-        feedServices.put(R.id.selectorCNNButton,"cnn");
+        feedServices.put(R.id.selectorBBCNewsButton, "bbc-news");
+        feedServices.put(R.id.selectorBBCSportsButton, "espn-cric-info");
+        feedServices.put(R.id.selectorCNNButton, "cnn");
 
         for (Map.Entry<Integer, String> entry : feedServices.entrySet()) {
             final int feedButtonId = entry.getKey();
@@ -98,7 +98,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
                     globalClass.setSelectedFeedService(feedService);
 
                     Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-                    intent.putExtra(globalClass.KEY_SERVICE_NAME,feedService);
+                    intent.putExtra(globalClass.KEY_SERVICE_NAME, feedService);
                     FeedSelectorActivity.this.startActivity(intent);
                 }
             });
@@ -158,20 +158,20 @@ public class FeedSelectorActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action_bar, menu);
 
-        Log.d(TAG,"Action : " + menu.findItem(R.id.action_theme_switch).getActionView());
-        theme_switch = (Switch)menu.findItem(R.id.action_theme_switch)
+        Log.d(TAG, "Action : " + menu.findItem(R.id.action_theme_switch).getActionView());
+        theme_switch = (Switch) menu.findItem(R.id.action_theme_switch)
                 .getActionView().findViewById(R.id.switch_theme);
 
         theme_switch.setChecked(globalClass.isDarkThemeEnabled());
         theme_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     Toast.makeText(getApplication(), "ON", Toast.LENGTH_SHORT)
                             .show();
                     globalClass.setDarkThemeEnabled(true);
                     FeedSelectorActivity.this.recreate();
-                }else{
+                } else {
                     Toast.makeText(getApplication(), "OFF", Toast.LENGTH_SHORT)
                             .show();
                     globalClass.setDarkThemeEnabled(false);
@@ -190,10 +190,18 @@ public class FeedSelectorActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about) {
-            Toast.makeText(getApplication(), "About", Toast.LENGTH_SHORT)
-                    .show();
-            return true;
+        switch (id) {
+            case R.id.action_about:
+                Toast.makeText(getApplication(), "About", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            case R.id.action_settings:
+                Toast.makeText(getApplication(), getString(R.string.action_settings), Toast.LENGTH_SHORT)
+                        .show();
+//                Intent intent = new Intent(FeedSelectorActivity.this, SettingsActivity.class);
+//                FeedSelectorActivity.this.startActivity(intent);
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
