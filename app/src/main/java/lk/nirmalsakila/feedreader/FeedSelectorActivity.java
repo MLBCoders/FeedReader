@@ -98,7 +98,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
                     globalClass.setSelectedFeedService(feedService);
 
                     Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-                    intent.putExtra("SERVICE",feedService);
+                    intent.putExtra(globalClass.KEY_SERVICE_NAME,feedService);
                     FeedSelectorActivity.this.startActivity(intent);
                 }
             });

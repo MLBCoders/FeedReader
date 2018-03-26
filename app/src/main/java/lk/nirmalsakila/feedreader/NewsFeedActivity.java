@@ -47,12 +47,13 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     GlobalClass globalClass;
     Switch data_saver_switch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         globalClass = (GlobalClass) this.getApplication();
-        setTheme(globalClass.isDarkThemeEnabled()? R.style.AppThemeDark : R.style.AppThemeLight);
+        setTheme(globalClass.isDarkThemeEnabled() ? R.style.AppThemeDark : R.style.AppThemeLight);
         setContentView(R.layout.activity_news_feed);
 
         mRecyclerView = findViewById(R.id.newsFeedRecyclerView);
@@ -66,10 +67,10 @@ public class NewsFeedActivity extends AppCompatActivity {
         gsonBuilder.setDateFormat("M/d/yy hh:mm a");
         gson = gsonBuilder.create();
 
-        String service = getIntent().getStringExtra("SERVICE");
-        Log.d(TAG,"Service : " + service);
-        ENDPOINT_HEADLINES = getServiceEndpoint(service,"top-headlines");
-        ENDPOINT_EVERYTHING = getServiceEndpoint(service,"everything");
+        String service = getIntent().getStringExtra(globalClass.KEY_SERVICE_NAME);
+        Log.d(TAG, "Service : " + service);
+        ENDPOINT_HEADLINES = getServiceEndpoint(service, "top-headlines");
+        ENDPOINT_EVERYTHING = getServiceEndpoint(service, "everything");
         feedEndpoint = ENDPOINT_EVERYTHING;
 //        fetchPosts(feedEndpoint);
 
@@ -101,11 +102,11 @@ public class NewsFeedActivity extends AppCompatActivity {
         feedTypeSelectButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    Log.d(TAG,"Endpoint : headlines ");
+                if (isChecked) {
+                    Log.d(TAG, "Endpoint : headlines ");
                     feedEndpoint = ENDPOINT_HEADLINES;
-                }else{
-                    Log.d(TAG,"Endpoint : Everything ");
+                } else {
+                    Log.d(TAG, "Endpoint : Everything ");
                     feedEndpoint = ENDPOINT_EVERYTHING;
                 }
                 fetchPosts(feedEndpoint);
@@ -121,7 +122,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
     private void fetchPosts(String ENDPOINT) {
-        Log.d(TAG,"Fetching Started");
+        Log.d(TAG, "Fetching Started");
         mSwipeLayout.setRefreshing(true);
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT, onPostsLoaded, onPostsError);
 
@@ -134,10 +135,10 @@ public class NewsFeedActivity extends AppCompatActivity {
             Log.i("PostActivity", response);
 
             PostSet postSet = gson.fromJson(response, PostSet.class);
-            Log.i("PostActivity","PostSet ==> Status : " + postSet.status);
+            Log.i("PostActivity", "PostSet ==> Status : " + postSet.status);
             posts = postSet.articles;
 //            mRecyclerView.setAdapter(new NewsFeedAdapter(getApplicationContext(),posts));
-            mRecyclerView.setAdapter(new PostFeedAdapter(posts,NewsFeedActivity.this.getApplicationContext()));
+            mRecyclerView.setAdapter(new PostFeedAdapter(posts, NewsFeedActivity.this.getApplicationContext()));
             mSwipeLayout.setRefreshing(false);
 
             Log.i("PostActivity", posts.size() + " posts loaded.");
@@ -160,16 +161,16 @@ public class NewsFeedActivity extends AppCompatActivity {
         }
     };
 
-    private void goToUrl (String url) {
+    private void goToUrl(String url) {
 //        Uri uriUrl = Uri.parse(url);
 //        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        Intent launchBrowser = new Intent(getApplicationContext(),WebActivity.class);
-        launchBrowser.putExtra("URL",url);
+        Intent launchBrowser = new Intent(getApplicationContext(), WebActivity.class);
+        launchBrowser.putExtra("URL", url);
         startActivity(launchBrowser);
     }
 
-    private String getServiceEndpoint(String serviceType,String feedType){
-        return "https://newsapi.org/v2/" + feedType + "?sources="+ serviceType + "&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
+    private String getServiceEndpoint(String serviceType, String feedType) {
+        return "https://newsapi.org/v2/" + feedType + "?sources=" + serviceType + "&apiKey=1c8530ec3214460bbfc19f8db75c28bb";
     }
 
     @Override
@@ -177,19 +178,19 @@ public class NewsFeedActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action_bar, menu);
 
-        Log.d(TAG,"Action : " + menu.findItem(R.id.action_theme_switch).getActionView());
-        data_saver_switch = (Switch)menu.findItem(R.id.action_theme_switch)
+        Log.d(TAG, "Action : " + menu.findItem(R.id.action_theme_switch).getActionView());
+        data_saver_switch = (Switch) menu.findItem(R.id.action_theme_switch)
                 .getActionView().findViewById(R.id.switch_theme);
 
         data_saver_switch.setChecked(globalClass.isDataSaverOn());
         data_saver_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     Toast.makeText(getApplication(), "ON", Toast.LENGTH_SHORT)
                             .show();
                     globalClass.setDataSaverOn(true);
-                }else{
+                } else {
                     Toast.makeText(getApplication(), "OFF", Toast.LENGTH_SHORT)
                             .show();
                     globalClass.setDataSaverOn(false);
@@ -207,10 +208,15 @@ public class NewsFeedActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about) {
-            Toast.makeText(getApplication(), "About", Toast.LENGTH_SHORT)
-                    .show();
-            return true;
+        switch (id) {
+            case R.id.action_about:
+                Toast.makeText(getApplication(), "About", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            case R.id.action_settings:
+                Toast.makeText(getApplication(), "Settings", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
