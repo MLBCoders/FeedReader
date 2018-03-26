@@ -181,7 +181,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         data_saver_switch = (Switch)menu.findItem(R.id.action_theme_switch)
                 .getActionView().findViewById(R.id.switch_theme);
 
-        data_saver_switch.setChecked(globalClass.isDarkThemeEnabled());
+        data_saver_switch.setChecked(globalClass.isDataSaverOn());
         data_saver_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

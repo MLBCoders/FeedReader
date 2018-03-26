@@ -2,7 +2,9 @@ package lk.nirmalsakila.feedreader;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -33,6 +35,10 @@ public class FeedSelectorActivity extends AppCompatActivity {
 //        setTheme(settings.getBoolean(AppSettings.Key.USE_DARK_THEME) ? R.style.AppThemeDark : R.style.AppThemeLight);
         super.onCreate(savedInstanceState);
         globalClass = (GlobalClass) this.getApplication();
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(globalClass.KEY_PREFERENCE_FILE, Context.MODE_PRIVATE);
+        globalClass.setSharedPreferences(sharedPreferences);
+
         setTheme(globalClass.isDarkThemeEnabled()? R.style.AppThemeDark : R.style.AppThemeLight);
         setContentView(R.layout.activity_feed_selector);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
@@ -76,43 +82,64 @@ public class FeedSelectorActivity extends AppCompatActivity {
             }
         });
 
-        CardView CNNNews = findViewById(R.id.selectorCNNButton);
-        CNNNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        HashMap<Integer, String> feedServices = new HashMap<>();
+        feedServices.put(R.id.selectorBBCNewsButton,"bbc-news");
+        feedServices.put(R.id.selectorBBCSportsButton,"espn-cric-info");
+        feedServices.put(R.id.selectorCNNButton,"cnn");
 
-                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-                intent.putExtra("SERVICE","cnn");
-                FeedSelectorActivity.this.startActivity(intent);
-//                globalClass.setDarkThemeEnabled(true);
-//                FeedSelectorActivity.this.recreate();
-            }
-        });
+        for (Map.Entry<Integer, String> entry : feedServices.entrySet()) {
+            final int feedButtonId = entry.getKey();
+            final String feedService = entry.getValue();
 
-        CardView BBCNews = findViewById(R.id.selectorBBCNewsButton);
-        BBCNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            CardView feedButton = findViewById(feedButtonId);
+            feedButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    globalClass.setSelectedFeedService(feedService);
 
-                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-                intent.putExtra("SERVICE", "bbc-news");
-                FeedSelectorActivity.this.startActivity(intent);
-//                globalClass.setDarkThemeEnabled(false);
-//                FeedSelectorActivity.this.recreate();
-            }
-        });
-
-
-        CardView BBCSports = findViewById(R.id.selectorBBCSportsButton);
-        BBCSports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
-                intent.putExtra("SERVICE", "espn-cric-info");
-                FeedSelectorActivity.this.startActivity(intent);
-            }
-        });
+                    Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
+                    intent.putExtra("SERVICE",feedService);
+                    FeedSelectorActivity.this.startActivity(intent);
+                }
+            });
+        }
+//        CardView CNNNews = findViewById(R.id.selectorCNNButton);
+//        CNNNews.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
+//                intent.putExtra("SERVICE","cnn");
+//                FeedSelectorActivity.this.startActivity(intent);
+////                globalClass.setDarkThemeEnabled(true);
+////                FeedSelectorActivity.this.recreate();
+//            }
+//        });
+//
+//        CardView BBCNews = findViewById(R.id.selectorBBCNewsButton);
+//        BBCNews.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
+//                intent.putExtra("SERVICE", "bbc-news");
+//                FeedSelectorActivity.this.startActivity(intent);
+////                globalClass.setDarkThemeEnabled(false);
+////                FeedSelectorActivity.this.recreate();
+//            }
+//        });
+//
+//
+//        CardView BBCSports = findViewById(R.id.selectorBBCSportsButton);
+//        BBCSports.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
+//                intent.putExtra("SERVICE", "espn-cric-info");
+//                FeedSelectorActivity.this.startActivity(intent);
+//            }
+//        });
 
         CardView CNNSports = findViewById(R.id.selectorCNNSportsButton);
         CNNSports.setOnClickListener(new View.OnClickListener() {

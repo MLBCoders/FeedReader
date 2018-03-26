@@ -2,19 +2,27 @@ package lk.nirmalsakila.feedreader;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Created by user on 3/14/2018.
  */
 
 public class GlobalClass extends Application {
+//    KEYs and TAGs
     final String TAG = "FEEDREADER";
     final String KEY_SERVICE_NAME = "ServiceName";
+    final String KEY_PREFERENCE_FILE = "FeedReaderPreference";
+    final String KEY_DARK_THEME_ENABLED = "DarkThemeEnabled";
+    final String KEY_DATA_SAVER_ON = "DataSaverOn";
+
     Context APPLICaTION_CONTEXT = null;
 
     String selectedFeedService;
     boolean darkThemeEnabled;
     boolean dataSaverOn;
+
+    SharedPreferences sharedPreferences;
 
     public String getSelectedFeedService() {
         return selectedFeedService;
@@ -38,6 +46,8 @@ public class GlobalClass extends Application {
 
     public void setDarkThemeEnabled(boolean darkThemeEnabled) {
         this.darkThemeEnabled = darkThemeEnabled;
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putBoolean(KEY_DARK_THEME_ENABLED,true).apply();
     }
 
     public boolean isDataSaverOn() {
@@ -46,5 +56,17 @@ public class GlobalClass extends Application {
 
     public void setDataSaverOn(boolean dataSaverOn) {
         this.dataSaverOn = dataSaverOn;
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putBoolean(KEY_DATA_SAVER_ON,true).apply();
+    }
+
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    public void setSharedPreferences(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
+        darkThemeEnabled = sharedPreferences.getBoolean(KEY_DARK_THEME_ENABLED,false);
+        dataSaverOn = sharedPreferences.getBoolean(KEY_DATA_SAVER_ON,false);
     }
 }
