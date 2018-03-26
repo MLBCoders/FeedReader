@@ -47,7 +47,7 @@ public class GlobalClass extends Application {
     public void setDarkThemeEnabled(boolean darkThemeEnabled) {
         this.darkThemeEnabled = darkThemeEnabled;
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putBoolean(KEY_DARK_THEME_ENABLED,true).apply();
+        editor.putBoolean(KEY_DARK_THEME_ENABLED,darkThemeEnabled).apply();
     }
 
     public boolean isDataSaverOn() {
@@ -57,7 +57,7 @@ public class GlobalClass extends Application {
     public void setDataSaverOn(boolean dataSaverOn) {
         this.dataSaverOn = dataSaverOn;
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putBoolean(KEY_DATA_SAVER_ON,true).apply();
+        editor.putBoolean(KEY_DATA_SAVER_ON,dataSaverOn).apply();
     }
 
     public SharedPreferences getSharedPreferences() {
