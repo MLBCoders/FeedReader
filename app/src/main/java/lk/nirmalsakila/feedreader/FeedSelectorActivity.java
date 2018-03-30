@@ -1,10 +1,9 @@
 package lk.nirmalsakila.feedreader;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -13,14 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +24,8 @@ public class FeedSelectorActivity extends AppCompatActivity {
     Switch theme_switch;
     private final String TAG = "FEED_SELECTOR";
 
+    boolean darkThemeEnabled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        AppSettings settings = AppSettings.getInstance(this);
@@ -36,11 +33,16 @@ public class FeedSelectorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         globalClass = (GlobalClass) this.getApplication();
 
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(globalClass.KEY_PREFERENCE_FILE, Context.MODE_PRIVATE);
+//        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(globalClass.KEY_PREFERENCE_FILE, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         globalClass.setSharedPreferences(sharedPreferences);
 
-        setTheme(globalClass.isDarkThemeEnabled() ? R.style.AppThemeDark : R.style.AppThemeLight);
+        darkThemeEnabled = globalClass.isDarkThemeEnabled();
+        setTheme(darkThemeEnabled ? R.style.AppThemeDark_ActionBar : R.style.AppThemeLight_ActionBar);
         setContentView(R.layout.activity_feed_selector);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.general_toolbar);
+//        setSupportActionBar(toolbar);
+
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        try {
@@ -49,28 +51,34 @@ public class FeedSelectorActivity extends AppCompatActivity {
 //            Log.d(TAG,"No Action Bar");
 //        }
 
-        globalClass.setAPPLICaTION_CONTEXT(getApplicationContext());
+        globalClass.setApplication_Context(getApplicationContext());
+
+//        testing settings preference
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        for (Map.Entry<String, ?> entry : sp.getAll().entrySet()) {
+            Log.d("SHARED","Key : " + entry.getKey() + "  Val : " + entry.getValue());
+        }
 
         HashMap<Integer, Integer> feedSelectors = new HashMap<>();
-        feedSelectors.put(R.string.twitter, R.id.selectorTwitterButton);
+//        feedSelectors.put(R.string.twitter, R.id.selectorTwitterButton);
 //        feedSelectors.put(R.string.reddit,R.id.selectorTwitterButton1);
 //        feedSelectors.put(R.string.rss,R.id.selectorTwitterButton2);
 
-        for (Map.Entry<Integer, Integer> entry : feedSelectors.entrySet()) {
-            final int feedTypeStringId = entry.getKey();
-            int feedTypeButtonId = entry.getValue();
-
-            CardView feedTypeButton = findViewById(feedTypeButtonId);
-            feedTypeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    globalClass.setSelectedFeedService(getResources().getString(feedTypeStringId));
-
-                    Intent intent = new Intent(FeedSelectorActivity.this, FeedServiceActivity.class);
-                    FeedSelectorActivity.this.startActivity(intent);
-                }
-            });
-        }
+//        for (Map.Entry<Integer, Integer> entry : feedSelectors.entrySet()) {
+//            final int feedTypeStringId = entry.getKey();
+//            int feedTypeButtonId = entry.getValue();
+//
+//            CardView feedTypeButton = findViewById(feedTypeButtonId);
+//            feedTypeButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    globalClass.setSelectedFeedService(getResources().getString(feedTypeStringId));
+//
+//                    Intent intent = new Intent(FeedSelectorActivity.this, FeedServiceActivity.class);
+//                    FeedSelectorActivity.this.startActivity(intent);
+//                }
+//            });
+//        }
 
         CardView feedTypeButton = findViewById(R.id.selectorTwitterButton2);
         feedTypeButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +93,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
         HashMap<Integer, String> feedServices = new HashMap<>();
         feedServices.put(R.id.selectorBBCNewsButton, "bbc-news");
         feedServices.put(R.id.selectorBBCSportsButton, "espn-cric-info");
-        feedServices.put(R.id.selectorCNNButton, "cnn");
+//        feedServices.put(R.id.selectorCNNButton, "cnn");
 
         for (Map.Entry<Integer, String> entry : feedServices.entrySet()) {
             final int feedButtonId = entry.getKey();
@@ -103,18 +111,18 @@ public class FeedSelectorActivity extends AppCompatActivity {
                 }
             });
         }
-//        CardView CNNNews = findViewById(R.id.selectorCNNButton);
-//        CNNNews.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(FeedSelectorActivity.this, NewsFeedActivity.class);
+        CardView CNNNews = findViewById(R.id.selectorCNNButton);
+        CNNNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(FeedSelectorActivity.this, FeedSelectorTabsActivity.class);
 //                intent.putExtra("SERVICE","cnn");
-//                FeedSelectorActivity.this.startActivity(intent);
-////                globalClass.setDarkThemeEnabled(true);
-////                FeedSelectorActivity.this.recreate();
-//            }
-//        });
+                FeedSelectorActivity.this.startActivity(intent);
+//                globalClass.setDarkThemeEnabled(true);
+//                FeedSelectorActivity.this.recreate();
+            }
+        });
 //
 //        CardView BBCNews = findViewById(R.id.selectorBBCNewsButton);
 //        BBCNews.setOnClickListener(new View.OnClickListener() {
@@ -198,13 +206,25 @@ public class FeedSelectorActivity extends AppCompatActivity {
             case R.id.action_settings:
                 Toast.makeText(getApplication(), getString(R.string.action_settings), Toast.LENGTH_SHORT)
                         .show();
-//                Intent intent = new Intent(FeedSelectorActivity.this, SettingsActivity.class);
-//                FeedSelectorActivity.this.startActivity(intent);
-                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                Intent intent = new Intent(FeedSelectorActivity.this, SettingsActivity.class);
+                intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT,SettingsActivity.GeneralPreferenceFragment.class.getName());
+                intent.putExtra(SettingsActivity.EXTRA_NO_HEADERS,true);
+                startActivity(intent);
+//                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d("FEED","ON POST RESUME");
+        boolean nowDarkThemeEnabled = globalClass.isDarkThemeEnabled();
+        if(darkThemeEnabled!= nowDarkThemeEnabled){
+            FeedSelectorActivity.this.recreate();
+        }
     }
 
 }

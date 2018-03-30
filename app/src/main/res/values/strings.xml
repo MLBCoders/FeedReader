@@ -96,4 +96,16 @@
     <string name="dark_theme">Dark Theme</string>
     <string name="download">Download</string>
     <string name="error_network_connection">Internet disconnected. Please try after connecting to internet.</string>
+    <string name="title_activity_settings2">Settings</string>
+    <string name="title_activity_feed_selector_tabs">FeedSelectorTabsActivity</string>
+    <string name="tab_text_1">News</string>
+    <string name="tab_text_2">Sports</string>
+    <string name="tab_text_3">Other</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="settings_key_dark_theme">DarkThemeEnabled</string>
+    <string name="settings_summary_dark_theme">Enable to have a more eye friendly theme</string>
+    <string name="settings_title_dark_theme">Dark Theme</string>
+    <string name="settings_key_data_saver">DataSaverOn</string>
+    <string name="settings_summary_data_saver">Images will not be downloaded automatically</string>
+    <string name="settings_title_data_saver">Data Saver</string>
 </resources>

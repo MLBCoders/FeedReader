@@ -39,14 +39,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewsFeedActivity" />
+        <activity android:name=".NewsFeedActivity"
+            android:parentActivityName=".FeedSelectorActivity"/>
         <activity android:name=".WebActivity" />
         <activity
             android:name=".FeedListSelectorActivity"
             android:label="@string/title_activity_feed_list_selector" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".FeedSelectorTabsActivity"
+            android:label="@string/title_activity_feed_selector_tabs"
+            android:theme="@style/AppThemeLight">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

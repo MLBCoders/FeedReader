@@ -1,7 +1,19 @@
 package lk.nirmalsakila.feedreader;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsSession;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +37,12 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
 
     private static List<Post> mDataSet;
     GlobalClass globalClass;
+
+    public static final String CUSTOM_TAB_PACKAGE_NAME = "com.android.chrome";
+    CustomTabsClient mClient;
+    private static CustomTabsSession mCustomTabsSession;
+    private static CustomTabsServiceConnection mCustomTabsServiceConnection;
+    private static CustomTabsIntent customTabsIntent;
 
     public static class PostFeedViewHolder extends RecyclerView.ViewHolder{
 
@@ -83,8 +101,32 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
         Log.d("PostActivity","Post Feed Adapter Created . DATA : " + dataSet.size() );
         mDataSet = dataSet;
 
-        globalClass = (GlobalClass) context;
-//        Log.d("FEED_ADAPTER","Global Class : " + globalClass);
+        globalClass = (GlobalClass) context.getApplicationContext();
+        mCustomTabsServiceConnection = new CustomTabsServiceConnection() {
+            @Override
+            public void onCustomTabsServiceConnected(ComponentName componentName, CustomTabsClient customTabsClient) {
+                mClient = customTabsClient;
+                mClient.warmup(0L);
+                mCustomTabsSession = mClient.newSession(null);
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mClient = null;
+            }
+        };
+        CustomTabsClient.bindCustomTabsService(context, CUSTOM_TAB_PACKAGE_NAME, mCustomTabsServiceConnection);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(mCustomTabsSession);
+        if(globalClass.isDarkThemeEnabled()){
+            builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorTextBlack));
+            builder.setSecondaryToolbarColor(ContextCompat.getColor(context,R.color.colorWhite));
+        }else{
+            builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        }
+        builder.setCloseButtonIcon(drawableToBitmap(globalClass.Application_Context.getDrawable(R.drawable.ic_ab_back_material_light)));
+        builder.setShowTitle(true);
+        builder.setStartAnimations(context, R.anim.slide_in_right, R.anim.slide_out_left);
+        builder.setExitAnimations(context, R.anim.slide_in_left, R.anim.slide_out_right);
+        customTabsIntent = builder.build();
     }
 
     @Override
@@ -144,8 +186,37 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
     private static void goToUrl (Context context , String url) {
 //        Uri uriUrl = Uri.parse(url);
 //        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        Intent launchBrowser = new Intent(context,WebActivity.class);
-        launchBrowser.putExtra("URL",url);
-       context.startActivity(launchBrowser);
+//        Intent launchBrowser = new Intent(context,WebActivity.class);
+//        launchBrowser.putExtra("URL",url);
+//       context.startActivity(launchBrowser);
+//        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+//        CustomTabsIntent customTabsIntent = builder.build();
+//        customTabsIntent.launchUrl(context, Uri.parse(url));
+
+        customTabsIntent.launchUrl(context, Uri.parse(url));
+    }
+
+
+//    http://corochann.com/convert-between-bitmap-and-drawable-313.html
+    public Bitmap drawableToBitmap (Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 }

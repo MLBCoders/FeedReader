@@ -2,7 +2,9 @@ package lk.nirmalsakila.feedreader;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.provider.Settings;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -51,13 +53,13 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     GlobalClass globalClass;
     Switch data_saver_switch;
-
+    Snackbar snackBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         globalClass = (GlobalClass) this.getApplication();
-        setTheme(globalClass.isDarkThemeEnabled() ? R.style.AppThemeDark : R.style.AppThemeLight);
+        setTheme(globalClass.isDarkThemeEnabled() ? R.style.AppThemeDark_ActionBar : R.style.AppThemeLight_ActionBar);
         setContentView(R.layout.activity_news_feed);
 
         mRecyclerView = findViewById(R.id.newsFeedRecyclerView);
@@ -128,6 +130,9 @@ public class NewsFeedActivity extends AppCompatActivity {
     private void fetchPosts(String ENDPOINT) {
         Log.d(TAG, "Fetching Started");
         mSwipeLayout.setRefreshing(true);
+        if (snackBar!=null && snackBar.isShown()) {
+            snackBar.dismiss();
+        }
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT, onPostsLoaded, onPostsError);
 
         requestQueue.add(request);
@@ -163,7 +168,7 @@ public class NewsFeedActivity extends AppCompatActivity {
             Log.e("PostActivity", "ERROR : " + error.toString());
 //            Toast.makeText(getApplication(), getString(R.string.error_network_connection), Toast.LENGTH_SHORT)
 //                    .show();
-            final Snackbar snackBar = Snackbar.make(findViewById(R.id.activity_news_feed), getString(R.string.error_network_connection), Snackbar.LENGTH_INDEFINITE);
+            snackBar = Snackbar.make(findViewById(R.id.activity_news_feed), getString(R.string.error_network_connection), Snackbar.LENGTH_INDEFINITE);
 
             snackBar.setAction("Connect", new View.OnClickListener() {
                 @Override
@@ -174,7 +179,7 @@ public class NewsFeedActivity extends AppCompatActivity {
             });
             snackBar.setActionTextColor(Color.RED);
             View sbView = snackBar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
             textView.setTextColor(Color.WHITE);
             snackBar.show();
             mSwipeLayout.setRefreshing(false);
@@ -184,9 +189,12 @@ public class NewsFeedActivity extends AppCompatActivity {
     private void goToUrl(String url) {
 //        Uri uriUrl = Uri.parse(url);
 //        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        Intent launchBrowser = new Intent(getApplicationContext(), WebActivity.class);
-        launchBrowser.putExtra("URL", url);
-        startActivity(launchBrowser);
+//        Intent launchBrowser = new Intent(getApplicationContext(), WebActivity.class);
+//        launchBrowser.putExtra("URL", url);
+//        startActivity(launchBrowser);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
     private String getServiceEndpoint(String serviceType, String feedType) {

@@ -1,77 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="lk.nirmalsakila.feedreader.FeedSelectorActivity">
+    tools:context=".FeedSelectorTabsActivity$PlaceholderFragment">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppThemeLight.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppThemeLight.PopupOverlay"
-            app:title="@string/app_name">
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/section_label"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+        <!--android:layout_marginEnd="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout"-->
+        <!--tools:layout_constraintLeft_creator="1"-->
+        <!--tools:layout_constraintTop_creator="1" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@id/appbar">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/selectorTwitterButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:elevation="10dp"
-                app:cardCornerRadius="20dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorAndroid"
-                    android:padding="40dp"
-                    android:src="@drawable/android_l2" />
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/selectorTwitterButton2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:elevation="10dp"
-                app:cardCornerRadius="20dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorTwitter"
-                    android:padding="40dp"
-                    android:src="@drawable/twitter_logo" />
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,9 +67,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorCNN"
-                    android:padding="40dp"
-                    android:src="@drawable/cnn_logo_grey" />
+                    android:background="@color/colorAndroid"
+                    android:padding="20dp"
+                    android:src="@drawable/androida_logo2" />
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
@@ -133,7 +93,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/colorBBC"
                     android:padding="40dp"
-                    android:src="@drawable/bbc_news_white" />
+                    android:src="@drawable/bbc_logo_white" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -153,5 +113,47 @@
                     android:src="@drawable/newbbcsport_black" />
             </android.support.v7.widget.CardView>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                app:cardCornerRadius="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorESPN"
+                    android:padding="40dp"
+                    android:src="@drawable/espn" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                app:cardCornerRadius="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorESPNCricInfo"
+                    android:padding="40dp"
+                    android:src="@drawable/expn_cric_infologo" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
     </LinearLayout>
-</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

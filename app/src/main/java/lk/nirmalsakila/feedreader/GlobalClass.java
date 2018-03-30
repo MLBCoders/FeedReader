@@ -15,12 +15,14 @@ public class GlobalClass extends Application {
     final String KEY_PREFERENCE_FILE = "FeedReaderPreference";
     final String KEY_DARK_THEME_ENABLED = "DarkThemeEnabled";
     final String KEY_DATA_SAVER_ON = "DataSaverOn";
+    final String KEY_LINK_OPEN_INTERNAL_BROWSER = "LinkOpenInInternalBrowser ";
 
-    Context APPLICaTION_CONTEXT = null;
+    Context Application_Context = null;
 
     String selectedFeedService;
     boolean darkThemeEnabled;
     boolean dataSaverOn;
+    boolean linkOpenInInternalBrowserEnabled;
 
     SharedPreferences sharedPreferences;
 
@@ -32,12 +34,12 @@ public class GlobalClass extends Application {
         this.selectedFeedService = selectedFeedService;
     }
 
-    public Context getAPPLICaTION_CONTEXT() {
-        return APPLICaTION_CONTEXT;
+    public Context getApplication_Context() {
+        return Application_Context;
     }
 
-    public void setAPPLICaTION_CONTEXT(Context APPLICaTION_CONTEXT) {
-        this.APPLICaTION_CONTEXT = APPLICaTION_CONTEXT;
+    public void setApplication_Context(Context application_Context) {
+        this.Application_Context = application_Context;
     }
 
     public boolean isDarkThemeEnabled() {
@@ -68,5 +70,13 @@ public class GlobalClass extends Application {
         this.sharedPreferences = sharedPreferences;
         darkThemeEnabled = sharedPreferences.getBoolean(KEY_DARK_THEME_ENABLED,false);
         dataSaverOn = sharedPreferences.getBoolean(KEY_DATA_SAVER_ON,false);
+    }
+
+    public boolean isLinkOpenInInternalBrowserEnabled() {
+        return linkOpenInInternalBrowserEnabled;
+    }
+
+    public void setLinkOpenInInternalBrowserEnabled(boolean linkOpenInInternalBrowserEnabled) {
+        this.linkOpenInInternalBrowserEnabled = linkOpenInInternalBrowserEnabled;
     }
 }
