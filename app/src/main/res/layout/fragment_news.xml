@@ -66,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorBBC"
                 android:padding="40dp"
-                android:src="@drawable/bbc_logo_white" />
+                android:src="@drawable/bbc_news_white" />
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView

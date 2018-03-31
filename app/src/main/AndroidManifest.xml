@@ -39,8 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewsFeedActivity"
-            android:parentActivityName=".FeedSelectorActivity"/>
+        <activity
+            android:name=".NewsFeedActivity"
+            android:parentActivityName=".FeedSelectorActivity" />
         <activity android:name=".WebActivity" />
         <activity
             android:name=".FeedListSelectorActivity"
@@ -58,6 +59,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TextBasicActivity"
+            android:label="@string/title_activity_text_basic"
+            android:theme="@style/AppThemeLight"/>
     </application>
 
 </manifest>

@@ -60,7 +60,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         index >= 0
                                 ? listPreference.getEntries()[index]
                                 : null);
-
+                Log.d(globalClass.TAG,"Setting Listener Preference Gen : " + preference.getKey() + " Value : " + value);
+                if(preference.getKey().equals("theme_list")){
+                    if(value.equals("0")){
+                        Log.d(globalClass.TAG,"Settings Theme :  Light " );
+                        
+                    }else{
+                        Log.d(globalClass.TAG,"Settings Theme :  Dark " );
+                    }
+                }
             } else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
                 // using RingtoneManager.
@@ -197,7 +205,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
 //            bindPreferenceSummaryToValue(findPreference("example_text"));
-//            bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference("theme_list"));
         }
 
         @Override

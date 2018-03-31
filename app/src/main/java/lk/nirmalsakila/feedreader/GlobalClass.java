@@ -3,6 +3,7 @@ package lk.nirmalsakila.feedreader;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by user on 3/14/2018.
@@ -13,7 +14,7 @@ public class GlobalClass extends Application {
     final String TAG = "FEEDREADER";
     final String KEY_SERVICE_NAME = "ServiceName";
     final String KEY_PREFERENCE_FILE = "FeedReaderPreference";
-    final String KEY_DARK_THEME_ENABLED = "DarkThemeEnabled";
+    String KEY_DARK_THEME_ENABLED = "NOT_SET";// = "DarkThemeEnabled";
     final String KEY_DATA_SAVER_ON = "DataSaverOn";
     final String KEY_LINK_OPEN_INTERNAL_BROWSER = "LinkOpenInInternalBrowser ";
 
@@ -40,6 +41,8 @@ public class GlobalClass extends Application {
 
     public void setApplication_Context(Context application_Context) {
         this.Application_Context = application_Context;
+        KEY_DARK_THEME_ENABLED = this.Application_Context.getResources().getString(R.string.settings_key_dark_theme);
+        Log.d(TAG,"KEY Dark : " + KEY_DARK_THEME_ENABLED );
     }
 
     public boolean isDarkThemeEnabled() {

@@ -35,14 +35,12 @@
 
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
+        <item>Light</item>
+        <item>Dark</item>
     </string-array>
     <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
+        <item>light</item>
+        <item>dark</item>
     </string-array>
 
     <!-- Example settings for Data & Sync -->
@@ -108,4 +106,5 @@
     <string name="settings_key_data_saver">DataSaverOn</string>
     <string name="settings_summary_data_saver">Images will not be downloaded automatically</string>
     <string name="settings_title_data_saver">Data Saver</string>
+    <string name="title_activity_text_basic">TextBasicActivity</string>
 </resources>

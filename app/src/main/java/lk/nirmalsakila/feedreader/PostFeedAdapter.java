@@ -169,7 +169,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<PostFeedAdapter.PostFe
 //                .into(holder.postImage);
     }
 
-    public void downloadAndLoadImageToImageView(PostFeedViewHolder holder,String url){
+    private void downloadAndLoadImageToImageView(PostFeedViewHolder holder,String url){
         Context context = holder.postImage.getContext();
         holder.getPostImage().setVisibility(View.VISIBLE);
         Glide.with(context)

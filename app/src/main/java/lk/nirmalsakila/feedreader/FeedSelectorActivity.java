@@ -208,7 +208,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
                         .show();
                 Intent intent = new Intent(FeedSelectorActivity.this, SettingsActivity.class);
                 intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT,SettingsActivity.GeneralPreferenceFragment.class.getName());
-                intent.putExtra(SettingsActivity.EXTRA_NO_HEADERS,true);
+//                intent.putExtra(SettingsActivity.EXTRA_NO_HEADERS,true);
                 startActivity(intent);
 //                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
                 return true;
