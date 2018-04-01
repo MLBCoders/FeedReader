@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 import com.ernieyu.feedparser.Item;
 
+import java.text.DateFormat;
 import java.util.List;
 
-public class RssFeedListItemAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedModelViewHolder> {
+public class RssFeedListItemAdapter extends RecyclerView.Adapter<RssFeedListItemAdapter.FeedModelViewHolder> {
     private List<Item> mRssFeedModels1;
 
     public static class FeedModelViewHolder extends RecyclerView.ViewHolder {
@@ -38,15 +39,19 @@ public class RssFeedListItemAdapter extends RecyclerView.Adapter<RssFeedListAdap
         return holder;
     }
 
+
+
+
     @Override
     public void onBindViewHolder(FeedModelViewHolder holder, int position) {
 
-        final mRssFeedModels1 rssFeedModel = mRssFeedModels1.get(position);
+        final Item rssFeedModel = mRssFeedModels1.get(position);
         Log.d("RSS","RSS Model : " + rssFeedModel.toString());
-        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssTitle)).setText(rssFeedModel.title);
-        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssPubDate)).setText(rssFeedModel.pubDate);
-        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssContent)).setText(rssFeedModel.description);
-        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssLink)).setText(rssFeedModel.link);
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssTitle)).setText(rssFeedModel.getTitle());
+        String date = DateFormat.getDateTimeInstance().format(rssFeedModel.getPubDate());
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssPubDate)).setText(date);
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssContent)).setText(rssFeedModel.getDescription());
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssLink)).setText(rssFeedModel.getLink());
     }
 
     @Override
