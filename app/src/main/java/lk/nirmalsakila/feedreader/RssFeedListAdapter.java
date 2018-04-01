@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ernieyu.feedparser.Item;
+
 import java.util.List;
 
 /**
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedModelViewHolder> {
 
+    private List<Item> mRssFeedModels1;
     private List<RssFeedModel> mRssFeedModels;
 
     public static class FeedModelViewHolder extends RecyclerView.ViewHolder {
