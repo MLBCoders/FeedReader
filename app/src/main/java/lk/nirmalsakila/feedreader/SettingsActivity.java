@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -91,10 +92,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     }
                 }
 
-            } else {
+            } else if (preference instanceof SwitchPreference){
+                Log.d(globalClass.TAG,"Settings Switch preference : " + preference.getKey() + " v : " + stringValue);
+
+                if(preference.getKey().equals("DarkThemeEnabled")){
+                    if (stringValue.equals("true")){
+                        preference.setSummary("Dark Theme");
+                    }else{
+                        preference.setSummary("Light Theme");
+                    }
+                }else{
+                    preference.setSummary(stringValue);
+                }
+            }
+            else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
+                Log.d(globalClass.TAG,"Settings preference : " + preference.getKey() + " v : " + stringValue);
+
             }
             return true;
         }
@@ -124,10 +140,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+        if(preference instanceof SwitchPreference){
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getBoolean(preference.getKey(), false));
+        }else{
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), ""));
+        }
     }
 
     @Override
@@ -206,6 +229,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
 //            bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("theme_list"));
+            bindPreferenceSummaryToValue(findPreference("DarkThemeEnabled"));
         }
 
         @Override

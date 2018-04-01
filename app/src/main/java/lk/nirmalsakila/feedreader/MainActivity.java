@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ernieyu.feedparser.Feed;
+import com.ernieyu.feedparser.FeedParser;
+import com.ernieyu.feedparser.FeedParserFactory;
+import com.ernieyu.feedparser.Item;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -89,17 +94,29 @@ public class MainActivity extends AppCompatActivity {
                 return false;
 
             try {
-                if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
-                    urlLink = "http://" + urlLink;
-
+//                if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
+//                    urlLink = "http://" + urlLink;
+                urlLink = "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
                 URL url = new URL(urlLink);
                 InputStream inputStream = url.openConnection().getInputStream();
-                mFeedModelList = parseFeed(inputStream);
+//                mFeedModelList = parseFeed(inputStream);
+                FeedParser parser = FeedParserFactory.newParser();
+                Feed feed = parser.parse(inputStream);
+
+                Log.d("RSSF","FEED : " + feed);
+                for (Item item : feed.getItemList()){
+
+                    Log.d("RSSF","ITEM : " + item );
+                    Log.d("RSSF","ITEM title: " + item.getTitle() );
+                    Log.d("RSSF","ITEM Desc: " + item.getDescription() );
+                }
                 return true;
             } catch (IOException e) {
                 Log.e(TAG, "Error", e);
-            } catch (XmlPullParserException e) {
-                Log.e(TAG, "Error", e);
+//            } catch (XmlPullParserException e) {
+//                Log.e(TAG, "Error", e);
+            }catch (Exception e){
+                Log.e(TAG,"Error Parser ",e);
             }
             return false;
         }
@@ -113,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 mFeedDescriptionTextView.setText("Feed Description: " + mFeedDescription);
                 mFeedLinkTextView.setText("Feed Link: " + mFeedLink);
                 // Fill RecyclerView
-                mRecyclerView.setAdapter(new RssFeedListAdapter(mFeedModelList));
+//                mRecyclerView.setAdapter(new RssFeedListAdapter(mFeedModelList));
             } else {
                 Toast.makeText(MainActivity.this,
                         "Enter a valid Rss feed url",
@@ -128,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
         String link = null;
         String description = null;
         String imageURi = null;
+        String creator = null;
+        String pubDate = null;
         boolean isItem = false;
         List<RssFeedModel> items = new ArrayList<>();
 
@@ -158,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                Log.d("MyXmlParser", "Parsing name ==> " + name);
                 String result = "";
                 if (xmlPullParser.next() == XmlPullParser.TEXT) {
                     result = xmlPullParser.getText();
@@ -171,13 +189,18 @@ public class MainActivity extends AppCompatActivity {
                     link = result;
                 } else if (name.equalsIgnoreCase("description")) {
                     description = result;
-                } else if (name.equalsIgnoreCase("urlToImage")) {
+                } else if (name.equalsIgnoreCase("url")) {
                      imageURi = result;
+                }else if (name.equalsIgnoreCase("dc:creator")) {
+                    creator = result;
+                }else if (name.equalsIgnoreCase("pubDate")) {
+                    pubDate = result;
                 }
 
                 if (title != null && link != null && description != null) {
                     if(isItem) {
-                        RssFeedModel item = new RssFeedModel(title, link, description,imageURi);
+                        RssFeedModel item = new RssFeedModel(title, link, description,imageURi,creator,pubDate);
+                        Log.d("RSSM","ITEM : " + item.toString());
                         items.add(item);
                     }
                     else {
@@ -190,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
                     link = null;
                     description = null;
                     imageURi = null;
+                    creator = null;
+                    pubDate = null;
                     isItem = false;
                 }
             }

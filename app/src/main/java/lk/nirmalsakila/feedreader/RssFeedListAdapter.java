@@ -2,6 +2,7 @@ package lk.nirmalsakila.feedreader;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.
     @Override
     public void onBindViewHolder(FeedModelViewHolder holder, int position) {
         final RssFeedModel rssFeedModel = mRssFeedModels.get(position);
+        Log.d("RSS","RSS Model : " + rssFeedModel.toString());
         ((TextView)holder.rssFeedView.findViewById(R.id.titleText)).setText(rssFeedModel.title);
         ((TextView)holder.rssFeedView.findViewById(R.id.descriptionText))
                 .setText(rssFeedModel.description);
