@@ -1,5 +1,6 @@
 package lk.nirmalsakila.feedreader;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -43,6 +44,7 @@ public class RssFeedActivity extends AppCompatActivity {
     private String mFeedTitle;
     private String mFeedLink;
     private String mFeedDescription;
+    private String rssUrl;
 
     private final String TAG = "RSSFEEDREADER";
 
@@ -73,6 +75,10 @@ public class RssFeedActivity extends AppCompatActivity {
                 new FetchFeedTask().execute((Void) null);
             }
         });
+
+        Intent intent = getIntent();
+
+        rssUrl = intent.getStringExtra("RSS_URL");
     }
 
     private class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {

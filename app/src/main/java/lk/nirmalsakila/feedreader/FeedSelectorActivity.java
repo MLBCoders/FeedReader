@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -116,8 +118,8 @@ public class FeedSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(FeedSelectorActivity.this, FeedSelectorTabsActivity.class);
-//                intent.putExtra("SERVICE","cnn");
+                Intent intent = new Intent(FeedSelectorActivity.this, RssFeedActivity.class);
+                intent.putExtra("SERVICE","http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml");
                 FeedSelectorActivity.this.startActivity(intent);
 //                globalClass.setDarkThemeEnabled(true);
 //                FeedSelectorActivity.this.recreate();
@@ -226,5 +228,7 @@ public class FeedSelectorActivity extends AppCompatActivity {
             FeedSelectorActivity.this.recreate();
         }
     }
+
+
 
 }
