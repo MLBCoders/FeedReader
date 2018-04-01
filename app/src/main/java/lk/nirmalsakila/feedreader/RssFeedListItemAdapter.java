@@ -13,15 +13,8 @@ import com.ernieyu.feedparser.Item;
 
 import java.util.List;
 
-/**
- * Created by user on 3/12/2018.
- */
-
-
-public class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedModelViewHolder> {
-
+public class RssFeedListItemAdapter extends RecyclerView.Adapter<RssFeedListAdapter.FeedModelViewHolder> {
     private List<Item> mRssFeedModels1;
-    private List<RssFeedModel> mRssFeedModels;
 
     public static class FeedModelViewHolder extends RecyclerView.ViewHolder {
         private View rssFeedView;
@@ -30,36 +23,34 @@ public class RssFeedListAdapter extends RecyclerView.Adapter<RssFeedListAdapter.
             super(v);
             rssFeedView = v;
         }
+
     }
 
-    public RssFeedListAdapter(List<RssFeedModel> rssFeedModels) {
-        mRssFeedModels = rssFeedModels;
+    public RssFeedListItemAdapter(List<Item> mRssFeedModels1) {
+        this.mRssFeedModels1 = mRssFeedModels1;
     }
 
     @Override
     public FeedModelViewHolder onCreateViewHolder(ViewGroup parent, int type) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_rss_feed, parent, false);
+                .inflate(R.layout.item_rss, parent, false);
         FeedModelViewHolder holder = new FeedModelViewHolder(v);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(FeedModelViewHolder holder, int position) {
-        final RssFeedModel rssFeedModel = mRssFeedModels.get(position);
+
+        final mRssFeedModels1 rssFeedModel = mRssFeedModels1.get(position);
         Log.d("RSS","RSS Model : " + rssFeedModel.toString());
-        ((TextView)holder.rssFeedView.findViewById(R.id.titleText)).setText(rssFeedModel.title);
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssTitle)).setText(rssFeedModel.title);
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssPubDate)).setText(rssFeedModel.pubDate);
         ((TextView)holder.rssFeedView.findViewById(R.id.txtRssContent)).setText(rssFeedModel.description);
-        ((TextView)holder.rssFeedView.findViewById(R.id.linkText)).setText(rssFeedModel.link);
-        if(rssFeedModel.imageURI!=null){
-            Uri imageUri = Uri.parse(rssFeedModel.imageURI);
-            ((ImageView)holder.rssFeedView.findViewById(R.id.rssImage)).setImageURI(imageUri);
-        }
+        ((TextView)holder.rssFeedView.findViewById(R.id.txtRssLink)).setText(rssFeedModel.link);
     }
 
     @Override
     public int getItemCount() {
-        return mRssFeedModels.size();
+        return mRssFeedModels1.size();
     }
 }
-

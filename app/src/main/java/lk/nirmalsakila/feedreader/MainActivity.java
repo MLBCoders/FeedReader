@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mFeedLinkTextView;
     private TextView mFeedDescriptionTextView;
 
-    private List<RssFeedModel> mFeedModelList;
+    private List<Item> mFeedModelList;
     private String mFeedTitle;
     private String mFeedLink;
     private String mFeedDescription;
@@ -99,9 +99,10 @@ public class MainActivity extends AppCompatActivity {
                 urlLink = "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
                 URL url = new URL(urlLink);
                 InputStream inputStream = url.openConnection().getInputStream();
-//                mFeedModelList = parseFeed(inputStream);
+
                 FeedParser parser = FeedParserFactory.newParser();
                 Feed feed = parser.parse(inputStream);
+                mFeedModelList = feed.getItemList();
 
                 Log.d("RSSF","FEED : " + feed);
                 for (Item item : feed.getItemList()){
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 mFeedDescriptionTextView.setText("Feed Description: " + mFeedDescription);
                 mFeedLinkTextView.setText("Feed Link: " + mFeedLink);
                 // Fill RecyclerView
-//                mRecyclerView.setAdapter(new RssFeedListAdapter(mFeedModelList));
+               mRecyclerView.setAdapter(new RssFeedListItemAdapter(mFeedModelList));
             } else {
                 Toast.makeText(MainActivity.this,
                         "Enter a valid Rss feed url",
